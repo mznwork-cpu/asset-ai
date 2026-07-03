@@ -1,0 +1,49 @@
+INSERT INTO securities_companies (
+    security_company_id,
+    security_company_name,
+    display_order,
+    is_active,
+)
+VALUES
+(
+    'da5f48f7-8075-42d0-b7cb-0b4a27cdd04d',
+    'SBI証券',
+    1,
+    true,
+),
+(
+    '774443a3-227b-4a1e-b83a-a5d7b5248235',
+    'SMBC日証',
+    2,
+    true,
+),
+(
+    '1faf590e-b936-4f4b-b8a6-af605c8ddd2a',
+    '大CON',
+    3,
+    true,
+),
+(
+    '6bb63892-50de-4009-901e-c57091d71198',
+    '野村証券',
+    4,
+    true,
+),
+(
+    'a874ad12-f930-4c0d-9bff-e8dd55c1696d',
+    'マネックス',
+    5,
+    true,
+),
+(
+    '6bb1d759-80c8-4ca7-af2b-5b105c574b77',
+    '松井証券',
+    6,
+    true,
+),
+(
+    'c103b7e2-c6be-4ae1-887d-52bd406de148',
+    '楽天証券',
+    7,
+    true,
+);
