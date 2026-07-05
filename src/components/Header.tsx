@@ -1,49 +1,38 @@
 "use client";
 
+import { ReactNode } from "react";
+
 /**
  * Headerコンポーネント
  *
  * 【役割】
  * ・アプリケーションタイトル表示
- * ・サイドメニュー開閉ボタン表示
- *
- * 【使用箇所】
- * ・全画面共通レイアウト
+ * ・右上領域に任意コンテンツ表示
  */
 type HeaderProps = {
-  /**
-   * メニューボタン押下時の処理
-   */
-  onMenuClick: () => void;
+  children?: ReactNode;
 };
 
+
 export default function Header({
-  onMenuClick,
+  children,
 }: HeaderProps) {
   return (
     <header
       className="
         flex
         items-center
-        justify-between
+        gap-3
         border-b
         px-4
         py-3
       "
     >
-      {/* アプリケーション名 */}
+      {children}
+
       <h1 className="text-xl font-bold">
         Asset IPO
       </h1>
-
-      {/* ハンバーガーメニュー */}
-      <button
-        type="button"
-        onClick={onMenuClick}
-        className="text-2xl"
-      >
-        ☰
-      </button>
     </header>
   );
 }
