@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Menu } from "lucide-react";
+import { useState } from "react";
 
 import {
   Sheet,
@@ -17,19 +18,25 @@ import {
  * ・ハンバーガーメニュー表示
  */
 export default function SideMenu() {
+
+  const [open, setOpen] = useState(false);
+
   return (
-    <Sheet>
+    <Sheet 
+      open={open}
+      onOpenChange={setOpen}
+    >
       <SheetTrigger className="flex items-center">
         <Menu className="h-6 w-6" />
       </SheetTrigger>
 
       <SheetContent side="left">
         <div className="mt-6 flex flex-col gap-3">
-          <Link href="/ipo">
+          <Link href="/ipo" onClick={()=>setOpen(false)}>
             IPO一覧
           </Link>
 
-          <Link href="/csv-import">
+          <Link href="/csv-import" onClick={()=>setOpen(false)}>
             CSV取込
           </Link>
 
