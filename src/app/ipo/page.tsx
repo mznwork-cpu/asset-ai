@@ -84,7 +84,7 @@ export default async function IpoPage() {
           検索
         </button>
       </div>
-<Accordion type="single">
+<Accordion>
   {ipoList?.map((ipo) => {
     const entries =
       entryMap.get(ipo.ipo_id) ?? [];
@@ -121,7 +121,7 @@ export default async function IpoPage() {
 
           <hr />
 
-          {entries.map((entry) => (
+          {entries.map((entry : any) => (
             <div
               key={entry.ipo_entry_id}
             >
