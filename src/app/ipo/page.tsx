@@ -1,21 +1,54 @@
+import { getCurrentUser } from "@/services/auth.service";
 import { getIpoList } from "@/services/ipo.service";
+import { getIpoEntries } from "@/services/ipo-entry.service";
 
 export default async function IpoPage() {
-  const { data, error } = await getIpoList();
-  if (error) {
+  // IPOリストの取得
+  const { 
+    data:ipoList,
+    error:ipoError,
+  } = await getIpoList();
+  if (ipoError) {
     return (
       <div>
-        エラー: {error.message}
+        エラー: {ipoError.message}
       </div>
     );
   }
+  // USER_ID取得してIPOEntryリストの取得
+  const { 
+    user 
+  } = await getCurrentUser();
+  const { 
+    data:ipoEntries, 
+    error:entryError,
+  } = await getIpoEntries(user.id);
+  if (entryError) {
+    return (
+      <div>
+        エラー: {entryError.message}
+      </div>
+    );
+  }
+  // IPOリストとIPOEntryのマージ
+  const entryMap = new Map();
+  ipoEntries?.forEach((entry) => {
+    const entries =
+      entryMap.get(entry.ipo_id) ?? [];
+
+    entries.push(entry);
+
+    entryMap.set(
+      entry.ipo_id,
+      entries
+    );
+  });
 
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">
         IPO一覧
       </h1>
-
       {/* 検索エリア */}
       <div className="border rounded p-4 space-y-4">
         <div>
@@ -50,13 +83,13 @@ export default async function IpoPage() {
         <thead>
           <tr>
             <th className="border p-2">
-              証券コード
+              証券CD
             </th>
             <th className="border p-2">
               企業名
             </th>
             <th className="border p-2">
-              市場
+              BB期間
             </th>
             <th className="border p-2">
               上場日
@@ -65,7 +98,7 @@ export default async function IpoPage() {
         </thead>
 
         <tbody>
-          {data?.map((ipo) => (
+          {ipoList?.map((ipo) => (
             <tr key={ipo.ipo_id}>
               <td className="border p-2">
                 {ipo.security_code}
@@ -76,7 +109,7 @@ export default async function IpoPage() {
               </td>
 
               <td className="border p-2">
-                {ipo.listing_market}
+                {ipo.bb_start} / {ipo.bb_end}
               </td>
 
               <td className="border p-2">
@@ -86,6 +119,16 @@ export default async function IpoPage() {
           ))}
         </tbody>
       </table>
+      <div>
+        Entry Count: {ipoEntries?.length}
+      </div>
+      <pre>
+        {JSON.stringify(
+          Array.from(entryMap.entries()),
+          null,
+          2
+        )}
+      </pre>
     </div>
   );
 }
