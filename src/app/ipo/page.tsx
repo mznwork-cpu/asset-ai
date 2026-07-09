@@ -1,11 +1,7 @@
-import { supabase } from "@/lib/supabase";
+import { getIpoList } from "@/services/ipo.service";
 
 export default async function IpoPage() {
-  const { data, error } = await supabase
-    .from("ipo_master")
-    .select("*")
-    .order("listing_date");
-
+  const { data, error } = await getIpoList();
   if (error) {
     return (
       <div>
