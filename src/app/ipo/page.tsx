@@ -1,6 +1,12 @@
 import { getCurrentUser } from "@/services/auth.service";
 import { getIpoList } from "@/services/ipo.service";
 import { getIpoEntries } from "@/services/ipo-entry.service";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export default async function IpoPage() {
   // IPOリストの取得
