@@ -55,6 +55,7 @@ export default async function IpoPage() {
       <h1 className="text-2xl font-bold">
         IPO一覧
       </h1>
+
       {/* 検索エリア */}
       <div className="border rounded p-4 space-y-4">
         <div>
@@ -83,7 +84,57 @@ export default async function IpoPage() {
           検索
         </button>
       </div>
+<Accordion type="single">
+  {ipoList?.map((ipo) => {
+    const entries =
+      entryMap.get(ipo.ipo_id) ?? [];
 
+    return (
+      <AccordionItem
+        key={ipo.ipo_id}
+        value={ipo.ipo_id}
+      >
+        <AccordionTrigger>
+          {ipo.company_name}
+        </AccordionTrigger>
+
+        <AccordionContent>
+          <div>
+            証券コード：
+            {ipo.security_code}
+          </div>
+
+          <div>
+            市場：
+            {ipo.listing_market}
+          </div>
+
+          <div>
+            上場日：
+            {ipo.listing_date}
+          </div>
+
+          <div>
+            IPO状態：
+            {ipo.ipo_status_name}
+          </div>
+
+          <hr />
+
+          {entries.map((entry) => (
+            <div
+              key={entry.ipo_entry_id}
+            >
+              {entry.security_company_name}
+              {" : "}
+              {entry.entry_status_name}
+            </div>
+          ))}
+        </AccordionContent>
+      </AccordionItem>
+    );
+  })}
+</Accordion>      
       {/* 一覧表示 */}
       <table className="w-full border">
         <thead>
