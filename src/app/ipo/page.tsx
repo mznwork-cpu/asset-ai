@@ -84,112 +84,58 @@ export default async function IpoPage() {
           検索
         </button>
       </div>
-<Accordion>
-  {ipoList?.map((ipo) => {
-    const entries =
-      entryMap.get(ipo.ipo_id) ?? [];
-
-    return (
-      <AccordionItem
-        key={ipo.ipo_id}
-        value={ipo.ipo_id}
-      >
-        <AccordionTrigger>
-          {ipo.company_name}
-        </AccordionTrigger>
-
-        <AccordionContent>
-          <div>
-            証券コード：
-            {ipo.security_code}
-          </div>
-
-          <div>
-            市場：
-            {ipo.listing_market}
-          </div>
-
-          <div>
-            上場日：
-            {ipo.listing_date}
-          </div>
-
-          <div>
-            IPO状態：
-            {ipo.ipo_status_name}
-          </div>
-
-          <hr />
-
-          {entries.map((entry : any) => (
-            <div
-              key={entry.ipo_entry_id}
-            >
-              {entry.security_company_name}
-              {" : "}
-              {entry.entry_status_name}
-            </div>
-          ))}
-        </AccordionContent>
-      </AccordionItem>
-    );
-  })}
-</Accordion>      
       {/* 一覧表示 */}
-      <table className="w-full border">
-        <thead>
-          <tr>
-            <th className="border p-2">
-              証券CD
-            </th>
-            <th className="border p-2">
-              企業名
-            </th>
-            <th className="border p-2">
-              BB期間
-            </th>
-            <th className="border p-2">
-              上場日
-            </th>
-          </tr>
-        </thead>
+      <Accordion>
+        {ipoList?.map((ipo) => {
+          const entries =
+            entryMap.get(ipo.ipo_id) ?? [];
+          return (
+            <AccordionItem
+              key={ipo.ipo_id}
+              value={ipo.ipo_id}
+            >
+              <AccordionTrigger>
+                {ipo.company_name}
+              </AccordionTrigger>
 
-        <tbody>
-          {ipoList?.map((ipo) => {
-            const entries = entryMap.get(ipo.ipo_id) ?? [];
-            return(
-              <tr key={ipo.ipo_id}>
-               <td className="border p-2">
-                  {/* 証券CD */}
+              <AccordionContent>
+                <div>
+                  証券コード：
                   {ipo.security_code}
-                </td>
-                <td className="border p-2">
-                  {/* 企業名 */}
-                  {ipo.company_name}
-                </td>
-                <td className="border p-2">
-                  {/* BB開始 と 終了 */}
-                  {ipo.bb_start} / {ipo.bb_end}
-                </td>
-                <td className="border p-2">
-                  {/* 上場日 */}
+                </div>
+
+                <div>
+                  市場：
+                  {ipo.listing_market}
+                </div>
+
+                <div>
+                  上場日：
                   {ipo.listing_date}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-      {/* <div>
-        Entry Count: {ipoEntries?.length}
-      </div>
-      <pre>
-        {JSON.stringify(
-          Array.from(entryMap.entries()),
-          null,
-          2
-        )}
-      </pre> */}
+                </div>
+
+                <div>
+                  IPO状態：
+                  {ipo.ipo_status_name}
+                </div>
+
+                <hr />
+
+                {entries.map((entry : any) => (
+                  <div
+                    key={entry.ipo_entry_id}
+                  >
+                    {entry.security_company_name}
+                    {" : "}
+                    {entry.entry_status_name}
+                  </div>
+                ))}
+              </AccordionContent>
+            </AccordionItem>
+          );
+        })}
+      </Accordion>
+ 
     </div>
   );
 }
