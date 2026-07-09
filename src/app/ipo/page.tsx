@@ -98,28 +98,32 @@ export default async function IpoPage() {
         </thead>
 
         <tbody>
-          {ipoList?.map((ipo) => (
-            <tr key={ipo.ipo_id}>
-              <td className="border p-2">
-                {ipo.security_code}
-              </td>
-
-              <td className="border p-2">
-                {ipo.company_name}
-              </td>
-
-              <td className="border p-2">
-                {ipo.bb_start} / {ipo.bb_end}
-              </td>
-
-              <td className="border p-2">
-                {ipo.listing_date}
-              </td>
-            </tr>
-          ))}
+          {ipoList?.map((ipo) => {
+            const entries = entryMap.get(ipo.ipo_id) ?? [];
+            return(
+              <tr key={ipo.ipo_id}>
+               <td className="border p-2">
+                  {/* 証券CD */}
+                  {ipo.security_code}
+                </td>
+                <td className="border p-2">
+                  {/* 企業名 */}
+                  {ipo.company_name}
+                </td>
+                <td className="border p-2">
+                  {/* BB開始 と 終了 */}
+                  {ipo.bb_start} / {ipo.bb_end}
+                </td>
+                <td className="border p-2">
+                  {/* 上場日 */}
+                  {ipo.listing_date}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
-      <div>
+      {/* <div>
         Entry Count: {ipoEntries?.length}
       </div>
       <pre>
@@ -128,7 +132,7 @@ export default async function IpoPage() {
           null,
           2
         )}
-      </pre>
+      </pre> */}
     </div>
   );
 }
