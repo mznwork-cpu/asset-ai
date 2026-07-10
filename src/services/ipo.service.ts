@@ -6,7 +6,7 @@ export async function getIpoList() {
   return await supabase
     .from("v_ipo_master")
     .select("*")
-    .order("listing_date");
+    .order("listing_date", { ascending: false });
 }
 
 // CREATE OR REPLACE VIEW v_ipo_master AS

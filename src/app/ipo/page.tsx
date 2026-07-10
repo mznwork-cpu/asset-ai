@@ -16,7 +16,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default async function IpoPage() {
   // IPOリストの取得
@@ -70,16 +77,6 @@ export default async function IpoPage() {
       <div className="border rounded p-4 space-y-4">
         <div>
           <label>
-            証券コード
-          </label>
-          <input
-            className="border ml-2 px-2 py-1"
-            type="text"
-          />
-        </div>
-
-        <div>
-          <label>
             企業名
           </label>
           <input
@@ -87,7 +84,33 @@ export default async function IpoPage() {
             type="text"
           />
         </div>
+        <div>
+          <label>IPO状態</label>
 
+          <Select>
+            <SelectTrigger>
+              <SelectValue placeholder="すべて" />
+            </SelectTrigger>
+
+            <SelectContent>
+              <SelectItem value="all">
+                すべて
+              </SelectItem>
+
+              <SelectItem value="before">
+                BB前
+              </SelectItem>
+
+              <SelectItem value="bb">
+                BB期間中
+              </SelectItem>
+
+              <SelectItem value="listed">
+                上場済
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
         <button
           className="border px-4 py-2"
         >
