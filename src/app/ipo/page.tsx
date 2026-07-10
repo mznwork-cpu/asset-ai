@@ -127,59 +127,68 @@ export default async function IpoPage() {
               key={ipo.ipo_id}
               value={ipo.ipo_id}
             >
-              <AccordionTrigger>
-                {ipo.company_name}
-              </AccordionTrigger>
+            <AccordionTrigger>
+              <div className="text-left">
+                <div className="font-semibold">
+                  {ipo.company_name} 
+                  {"  /評価:"} {ipo.ipo_rating}
+                  {"  /状態:"} {ipo.ipo_status_name}
 
-              <AccordionContent>
-                <div>
-                  証券コード：
-                  {ipo.security_code}
                 </div>
-
                 <div>
-                  市場：
-                  {ipo.listing_market}
-                </div>
-
-                <div>
-                  上場日：
+                  {" BB:"}
+                  {ipo.bb_start}
+                  {" - "}
+                  {ipo.bb_end}
+                {/* </div>
+                <div> */}
+                  {"  /上場:"}
                   {ipo.listing_date}
+                  {"  /価格:"}
+                  {ipo.public_price}
                 </div>
-
-                <div>
-                  IPO状態：
-                  {ipo.ipo_status_name}
-                </div>
-
+              </div>
+            </AccordionTrigger>
+              <AccordionContent>
+                {/* IPO詳細あればここに記載する */}
                 <hr />
                   <Table>
                     <TableHeader>
                       <TableRow>
                         <TableHead>証券会社</TableHead>
+                        <TableHead>申込株数</TableHead>
                         <TableHead>申込状態</TableHead>
                         <TableHead>抽選結果</TableHead>
+                        <TableHead>メモ</TableHead>
                       </TableRow>
-                    </TableHeader>
+                    </TableHeader> 
                     <TableBody>
                       {entries.map((entry: any) => (
                         <TableRow
-                        key={entry.ipo_entry_id}
-                      >
-                        <TableCell>
-                          {entry.security_company_name}
-                        </TableCell>
+                          key={entry.ipo_entry_id}
+                        >
+                          <TableCell>
+                            {entry.security_company_name}
+                          </TableCell>
 
-                        <TableCell>
-                          {entry.entry_status_name}
-                        </TableCell>
+                          <TableCell>
+                            {entry.applied_shares}
+                          </TableCell>
 
-                        <TableCell>
-                          {entry.lottery_result_name}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
+                          <TableCell>
+                            {entry.entry_status_name}
+                          </TableCell>
+
+                          <TableCell>
+                            {entry.lottery_result_name}
+                          </TableCell>
+
+                          <TableCell>
+                            {entry.memo}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
                 </Table>
               </AccordionContent>
             </AccordionItem>
