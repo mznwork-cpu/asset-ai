@@ -1,3 +1,4 @@
+// import
 import { getCurrentUser } from "@/services/auth.service";
 import { getIpoList } from "@/services/ipo.service";
 import { getIpoEntries } from "@/services/ipo-entry.service";
@@ -7,6 +8,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
 
 export default async function IpoPage() {
   // IPOリストの取得
@@ -120,16 +130,34 @@ export default async function IpoPage() {
                 </div>
 
                 <hr />
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>証券会社</TableHead>
+                        <TableHead>申込状態</TableHead>
+                        <TableHead>抽選結果</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {entries.map((entry: any) => (
+                        <TableRow
+                        key={entry.ipo_entry_id}
+                      >
+                        <TableCell>
+                          {entry.security_company_name}
+                        </TableCell>
 
-                {entries.map((entry : any) => (
-                  <div
-                    key={entry.ipo_entry_id}
-                  >
-                    {entry.security_company_name}
-                    {" : "}
-                    {entry.entry_status_name}
-                  </div>
-                ))}
+                        <TableCell>
+                          {entry.entry_status_name}
+                        </TableCell>
+
+                        <TableCell>
+                          {entry.lottery_result_name}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </AccordionContent>
             </AccordionItem>
           );
