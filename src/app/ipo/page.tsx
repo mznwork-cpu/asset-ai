@@ -127,7 +127,7 @@ export default async function IpoPage() {
               key={ipo.ipo_id}
               value={ipo.ipo_id}
             >
-            <AccordionTrigger>
+            <AccordionTrigger  className="bg-slate-200">
               <div className="text-left">
                 <div className="font-semibold">
                   {ipo.company_name} 
