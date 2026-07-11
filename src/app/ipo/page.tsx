@@ -2,6 +2,7 @@
 import { getCurrentUser } from "@/services/auth.service";
 import { getIpoList } from "@/services/ipo.service";
 import { getIpoEntries } from "@/services/ipo-entry.service";
+import { getCodeList } from "@/services/code.service";
 import {
   Accordion,
   AccordionContent,
@@ -26,6 +27,17 @@ import {
 } from "@/components/ui/select";
 
 export default async function IpoPage() {
+  // codeマスタからリスト取得
+  const {
+    data: entryStatusList,
+  } = await getCodeList(
+    "entry_status"
+  );
+  const {
+    data: lotteryResultList,
+  } = await getCodeList(
+    "lottery_result"
+  );
   // IPOリストの取得
   const { 
     data:ipoList,
@@ -172,11 +184,30 @@ export default async function IpoPage() {
                           </TableCell>
 
                           <TableCell>
-                            {entry.applied_shares}
+                            <Input
+                              defaultValue={
+                                entry.applied_shares?.toString()
+                              }
+                            />
                           </TableCell>
 
                           <TableCell>
-                            {entry.entry_status_name}
+                            <Select>
+                              <SelectTrigger>
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {entryStatusList?.map((item) => (
+                                  <SelectItem
+                                    key={item.code}
+                                    value={item.code}
+                                  >
+                                    {item.code_name}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+
                           </TableCell>
 
                           <TableCell>
