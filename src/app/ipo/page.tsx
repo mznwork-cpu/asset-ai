@@ -211,7 +211,22 @@ export default async function IpoPage() {
                           </TableCell>
 
                           <TableCell>
-                            {entry.lottery_result_name}
+                            <Select>
+                              <SelectTrigger>
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {lotteryResultList?.map((item) => (
+                                  <SelectItem
+                                    key={item.code}
+                                    value={item.code}
+                                  >
+                                    {item.code_name}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+
                           </TableCell>
 
                           <TableCell>
