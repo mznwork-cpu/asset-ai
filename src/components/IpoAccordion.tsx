@@ -70,6 +70,31 @@ export default function IpoAccordion({
          */
         const entries =
             entryStateMap[ipo.ipo_id] ?? [];
+        // 証券会社追加ボタン
+        const handleAddEntry = (
+            ipoId: string
+        ) => {
+            const currentEntries =
+                entryStateMap[ipoId] ?? [];
+            const newEntry = {
+                ipo_entry_id: crypto.randomUUID(),
+                security_company_name: "",
+                applied_shares: 100,
+                entry_status_code: "",
+                entry_status_name: "",
+                lottery_result_code: "",
+                lottery_result_name: "",
+                memo: "",
+            };
+            setEntryStateMap({
+            ...entryStateMap,
+            [ipoId]:[...currentEntries,
+                newEntry,
+            ],
+            });
+        };
+        console.log (entryStateMap)
+        // 画面
         return (
             <AccordionItem
                 key={ipo.ipo_id}
@@ -100,8 +125,10 @@ export default function IpoAccordion({
                     <AccordionContent>
                         {/* Accodionヘッダ */}
                         <div className="mb-4">
-                            <Button>
-                                追加
+                            <Button onClick={() =>
+                                handleAddEntry(ipo.ipo_id)
+                            }>
+                                証券会社追加
                             </Button>
                             <Button>
                                 編集保存
