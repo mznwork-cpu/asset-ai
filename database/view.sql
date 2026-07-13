@@ -1,4 +1,4 @@
--- ■
+-- ■IPO一覧
 CREATE OR REPLACE VIEW v_ipo_master AS
 SELECT
     im.ipo_id
@@ -25,7 +25,7 @@ FROM
         ON im.ipo_status_code = cm_iposc.code
        AND cm_iposc.code_category = 'ipo_status';
 
--- ■
+-- ■IPOエントリー一覧
 CREATE OR REPLACE VIEW v_ipo_entry AS
 SELECT
     ie.ipo_entry_id
@@ -54,3 +54,20 @@ FROM
     LEFT JOIN code_master cm_lr
         ON ie.lottery_result_code = cm_lr.code
        AND cm_lr.code_category = 'lottery_result';
+
+-- ■ユーザ証券
+CREATE OR REPLACE VIEW v_user_securities_companies AS
+select
+    us.user_id
+    ,us.security_company_id
+    ,cs.security_company_name
+    ,cs.display_order
+    ,us.account_no
+    ,us.is_active
+
+from
+    user_securities_companies us
+    left join securities_companies cs
+        on us.security_company_id = cs.security_company_id
+where
+    cs.is_active = true

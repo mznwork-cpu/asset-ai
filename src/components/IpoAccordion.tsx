@@ -29,6 +29,7 @@ import { Button } from "@/components/ui/button";
 type Props = {
   ipoList: any[];
   entryMap: Map<any, any>;
+  securItiesCompanies: any[];
   entryStatusList: any[];
   lotteryResultList: any[];
 };
@@ -36,6 +37,7 @@ type Props = {
 export default function IpoAccordion({
   ipoList,
   entryMap,
+  securItiesCompanies,
   entryStatusList,
   lotteryResultList,
 }: Props) {
@@ -93,7 +95,6 @@ export default function IpoAccordion({
             ],
             });
         };
-        console.log (entryStateMap)
         // 画面
         return (
             <AccordionItem
@@ -154,16 +155,21 @@ export default function IpoAccordion({
                             >
                                 {/* 証券会社名 */}
                                 <TableCell>
-                                {entry.security_company_name}
-                                </TableCell>
-                                
-                                {/* 申込株数 */}
-                                <TableCell>
-                                <Input
-                                    defaultValue={
-                                    entry.applied_shares?.toString()
-                                    }
-                                />
+                                    <Select>
+                                        <SelectTrigger>
+                                            <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {securItiesCompanies?.map((item) => (
+                                                <SelectItem
+                                                    key={item.security_company_id}
+                                                    value={item.security_company_id}
+                                                    >
+                                                    {item.code_name}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
                                 </TableCell>
 
                                 {/* 申込状態 */}

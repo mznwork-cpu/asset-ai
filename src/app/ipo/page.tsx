@@ -3,11 +3,16 @@ import { getCurrentUser } from "@/services/auth.service";
 import { getIpoList } from "@/services/ipo.service";
 import { getIpoEntries } from "@/services/ipo-entry.service";
 import { getCodeList } from "@/services/code.service";
+import { getUserSecuritiesCompanies } from "@/services/securities-company.service"
 // import Commponents
 import IpoAccordion from "@/components/IpoAccordion";
 import { Button } from "@/components/ui/button";
 
 export default async function IpoPage() {
+  // USER_ID取得してIPOEntryリストの取得
+  const { 
+    user 
+  } = await getCurrentUser();
   // codeマスタからリスト取得
   const {
     data: entryStatusList,
@@ -19,7 +24,12 @@ export default async function IpoPage() {
   } = await getCodeList(
     "lottery_result"
   );
-  // IPOリストの取得
+  // ユーザ証券会社一覧取得
+  const {
+    data: securitiesCompanies,
+  } = await getUserSecuritiesCompanies(
+    user.id
+  );  // IPOリストの取得
   const { 
     data:ipoList,
     error:ipoError,
@@ -31,10 +41,6 @@ export default async function IpoPage() {
       </div>
     );
   }
-  // USER_ID取得してIPOEntryリストの取得
-  const { 
-    user 
-  } = await getCurrentUser();
   const { 
     data:ipoEntries, 
     error:entryError,
@@ -80,6 +86,7 @@ export default async function IpoPage() {
         <IpoAccordion
           ipoList={ipoList}
           entryMap={entryMap}
+          securItiesCompanies={securitiesCompanies ??[]}
           entryStatusList={entryStatusList ?? []}
           lotteryResultList={lotteryResultList ?? []}
         /> 
