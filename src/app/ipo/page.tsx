@@ -86,7 +86,7 @@ export default async function IpoPage() {
         <IpoAccordion
           ipoList={ipoList}
           entryMap={entryMap}
-          securItiesCompanies={securitiesCompanies ??[]}
+          securitiesCompanies={securitiesCompanies ??[]}
           entryStatusList={entryStatusList ?? []}
           lotteryResultList={lotteryResultList ?? []}
         /> 

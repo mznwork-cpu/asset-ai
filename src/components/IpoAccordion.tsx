@@ -29,7 +29,7 @@ import { Button } from "@/components/ui/button";
 type Props = {
   ipoList: any[];
   entryMap: Map<any, any>;
-  securItiesCompanies: any[];
+  securitiesCompanies: any[];
   entryStatusList: any[];
   lotteryResultList: any[];
 };
@@ -37,7 +37,7 @@ type Props = {
 export default function IpoAccordion({
   ipoList,
   entryMap,
-  securItiesCompanies,
+  securitiesCompanies,
   entryStatusList,
   lotteryResultList,
 }: Props) {
@@ -155,23 +155,32 @@ export default function IpoAccordion({
                             >
                                 {/* 証券会社名 */}
                                 <TableCell>
-                                    <Select>
-                                        <SelectTrigger>
-                                            <SelectValue />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {securItiesCompanies?.map((item) => (
-                                                <SelectItem
-                                                    key={item.security_company_id}
-                                                    value={item.security_company_id}
-                                                    >
-                                                    {item.code_name}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
+                                <Select>
+                                    <SelectTrigger>
+                                    <SelectValue
+                                        placeholder={
+                                        entry.security_company_name
+                                        }
+                                    />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                    {securitiesCompanies?.map(
+                                        (company) => (
+                                        <SelectItem
+                                            key={
+                                            company.security_company_id
+                                            }
+                                            value={
+                                            company.security_company_id.toString()
+                                            }
+                                        >
+                                            {company.security_company_name}
+                                        </SelectItem>
+                                        )
+                                    )}
+                                    </SelectContent>
+                                </Select>
                                 </TableCell>
-
                                 {/* 申込状態 */}
                                 <TableCell>
                                     <Select>
