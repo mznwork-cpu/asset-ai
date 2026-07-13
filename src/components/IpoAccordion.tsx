@@ -95,7 +95,51 @@ export default function IpoAccordion({
             ],
             });
         };
-        // 画面
+        /**
+         * 編集値変更
+         * InputやSelect変更時にentryStateMapを更新する
+         */
+        const handleEntryChange = (
+        ipoId: string,
+        rowIndex: number,
+        field: string,
+        value: any
+        ) => {
+        /**
+         * 編集対象IPOの行一覧取得
+         */
+        const currentEntries =
+            entryStateMap[ipoId] ?? [];
+
+        /**
+         * 配列コピー
+         */
+        const updatedEntries = [
+            ...currentEntries,
+        ];
+
+        /**
+         * 対象行更新
+         */
+        updatedEntries[rowIndex] = {
+            ...updatedEntries[rowIndex],
+
+            /**
+             * 今回変更された項目だけ更新
+             */
+            [field]: value,
+        };
+
+        /**
+         * state更新
+         */
+        setEntryStateMap({
+            ...entryStateMap,
+
+            updatedEntries,
+        });
+        };
+        // Accodion表示
         return (
             <AccordionItem
                 key={ipo.ipo_id}
@@ -149,7 +193,11 @@ export default function IpoAccordion({
                         </TableHeader> */}
                         {/* テーブル行 */}
                         <TableBody>
-                            {entries.map((entry: any) => (
+                            {entries.map(
+                                (
+                                    entry: any,
+                                    index: number
+                                ) => (
                             <TableRow
                                 key={entry.ipo_entry_id}
                             >
@@ -181,6 +229,22 @@ export default function IpoAccordion({
                                     </SelectContent>
                                 </Select>
                                 </TableCell>
+                                
+                                {/* 申込枚数 */}
+                                <Input
+                                value={
+                                    entry.applied_shares ?? ""
+                                }
+                                /** 入力変更時 */
+                                onChange={(e) =>
+                                    handleEntryChange(
+                                    ipo.ipo_id,
+                                    index,
+                                    "applied_shares",
+                                    e.target.value
+                                    )
+                                }
+                                />
                                 {/* 申込状態 */}
                                 <TableCell>
                                     <Select>
