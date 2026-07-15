@@ -220,20 +220,22 @@ export default function IpoAccordion({
                                 </TableCell>
                                 
                                 {/* 申込枚数 */}
-                                <Input
-                                value={
-                                    entry.applied_shares ?? ""
-                                }
-                                /** 入力変更時 */
-                                onChange={(e) =>
-                                    handleEntryChange(
-                                    ipo.ipo_id,
-                                    index,
-                                    "applied_shares",
-                                    e.target.value
-                                    )
-                                }
-                                />
+                                <TableCell> 
+                                    <Input
+                                    value={
+                                        entry.applied_shares ?? ""
+                                    }
+                                    /** 入力変更時 */
+                                    onChange={(e) =>
+                                        handleEntryChange(
+                                        ipo.ipo_id,
+                                        index,
+                                        "applied_shares",
+                                        e.target.value
+                                        )
+                                    }
+                                    />
+                                </TableCell>
                                 {/* 申込状態 */}
                                 <TableCell>
                                     <Select>
