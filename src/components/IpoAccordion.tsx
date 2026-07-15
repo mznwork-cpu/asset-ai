@@ -73,6 +73,7 @@ export default function IpoAccordion({
         const entries =
             entryStateMap[ipo.ipo_id] ?? [];
         // 証券会社追加ボタン
+        //画面行追加
         const handleAddEntry = (
             ipoId: string
         ) => {
@@ -105,39 +106,27 @@ export default function IpoAccordion({
         field: string,
         value: any
         ) => {
-        /**
-         * 編集対象IPOの行一覧取得
-         */
-        const currentEntries =
-            entryStateMap[ipoId] ?? [];
+            // 編集対象IPOの行一覧取得
+            const currentEntries =
+                entryStateMap[ipoId] ?? [];
 
-        /**
-         * 配列コピー
-         */
-        const updatedEntries = [
-            ...currentEntries,
-        ];
+            // 配列コピー
+            const updatedEntries = [
+                ...currentEntries,
+            ];
 
-        /**
-         * 対象行更新
-         */
-        updatedEntries[rowIndex] = {
-            ...updatedEntries[rowIndex],
+            // 対象行更新
+            updatedEntries[rowIndex] = {
+                ...updatedEntries[rowIndex],
+                // 今回変更された項目だけ更新
+                [field]: value,
+            };
 
-            /**
-             * 今回変更された項目だけ更新
-             */
-            [field]: value,
-        };
-
-        /**
-         * state更新
-         */
-        setEntryStateMap({
-            ...entryStateMap,
-
-            updatedEntries,
-        });
+            // state更新
+            setEntryStateMap({
+                ...entryStateMap,
+                [ipoId]:updatedEntries,
+            });
         };
         // Accodion表示
         return (
