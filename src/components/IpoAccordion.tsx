@@ -192,7 +192,19 @@ export default function IpoAccordion({
                             >
                                 {/* 証券会社名 */}
                                 <TableCell>
-                                <Select>
+                                   <Select
+                                        value={
+                                            entry.security_company_name
+                                        }
+                                        onValueChange={(value) =>
+                                            handleEntryChange(
+                                            ipo.ipo_id,
+                                            index,
+                                            entry.security_company_id,
+                                            value
+                                            )
+                                        }
+                                     >
                                     <SelectTrigger>
                                     <SelectValue
                                         placeholder={
@@ -208,7 +220,7 @@ export default function IpoAccordion({
                                             company.security_company_id
                                             }
                                             value={
-                                            company.security_company_id.toString()
+                                            company.security_company_name
                                             }
                                         >
                                             {company.security_company_name}
