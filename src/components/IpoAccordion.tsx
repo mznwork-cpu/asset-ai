@@ -106,6 +106,12 @@ export default function IpoAccordion({
         field: string,
         value: any
         ) => {
+console.log(
+  "field=",
+  field,
+  "value=",
+  value
+);
             // 編集対象IPOの行一覧取得
             const currentEntries =
                 entryStateMap[ipoId] ?? [];
@@ -193,40 +199,58 @@ export default function IpoAccordion({
                                 {/* 証券会社名 */}
                                 <TableCell>
                                    <Select
+                                        // 画面表示
                                         value={
                                             entry.security_company_name
                                         }
-                                        onValueChange={(value) =>
-                                            handleEntryChange(
-                                            ipo.ipo_id,
-                                            index,
-                                            entry.security_company_id,
-                                            value
-                                            )
-                                        }
+                                        // 証券会社変更
+                                        onValueChange={(value) => {
+                                            // 選択された証券会社取得
+                                            const selectedCompany =
+                                                securitiesCompanies.find(
+                                                    (company) =>
+                                                        company.security_company_id.toString() ===value
+                                                );
+                                            // 対象IPOの現在行取得
+                                            const currentEntries = entryStateMap[ipo.ipo_id] ?? [];
+                                            // 編集用配列コピー
+                                            const updatedEntries = [
+                                                ...currentEntries,
+                                            ]
+                                            // 対象行更新
+                                            updatedEntries[index] = {
+                                                ...updatedEntries[index],
+                                                // DB保存用ID
+                                                security_company_id: value,
+                                                // 画面表示用名称
+                                                security_company_name:
+                                                    selectedCompany?.security_company_name ?? "",
+                                            };
+                                        // State更新
+                                        setEntryStateMap({
+                                            ...entryStateMap,
+                                            [ipo.ipo_id]: updatedEntries,
+                                        });
+                                        }}
                                      >
                                     <SelectTrigger>
-                                    <SelectValue
-                                        placeholder={
-                                        entry.security_company_name
-                                        }
-                                    />
+                                    
+                                        {/* 画面表示は名称 */}
+                                        <SelectValue 
+                                            placeholder='証券会社'
+                                        />
                                     </SelectTrigger>
                                     <SelectContent>
-                                    {securitiesCompanies?.map(
-                                        (company) => (
-                                        <SelectItem
-                                            key={
-                                            company.security_company_id
-                                            }
-                                            value={
-                                            company.security_company_name
-                                            }
-                                        >
-                                            {company.security_company_name}
-                                        </SelectItem>
-                                        )
-                                    )}
+                                        {securitiesCompanies?.map(
+                                            (company) => (
+                                                <SelectItem
+                                                    key={company.security_company_id}
+                                                    value={company.security_company_id.toString()}
+                                                >
+                                                {company.security_company_name}
+                                            </SelectItem>
+                                            )
+                                        )}
                                     </SelectContent>
                                 </Select>
                                 </TableCell>
