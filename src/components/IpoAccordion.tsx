@@ -87,6 +87,7 @@ export default function IpoAccordion({
                 lottery_result_name: "結果待ち",
                 memo: "",
             };
+            // State更新
             setEntryStateMap({
             ...entryStateMap,
             [ipoId]:[...currentEntries,
@@ -94,10 +95,29 @@ export default function IpoAccordion({
             ],
             });
         };
-        /**
-         * 編集値変更
-         * InputやSelect変更時にentryStateMapを更新する
-         */
+        // 画面行削除
+        const handleDeleteEntry = (
+            ipoId: string,
+            rowIndex: number
+        ) => {
+            console.log("行削除")
+            // 対象行得得
+            const currentEntries =
+                entryStateMap[ipoId] ?? [];
+            // 指定行の削除
+            const updatedEntries =
+                currentEntries.filter(
+                    (_entry, index) =>
+                        index !== rowIndex
+                );
+
+            // State更新
+           setEntryStateMap({
+                ...entryStateMap,
+                [ipoId]:updatedEntries,
+            });
+        };
+        // 画面行編集
         const handleEntryChange = (
             ipoId: string,
             rowIndex: number,
@@ -344,14 +364,21 @@ export default function IpoAccordion({
                                     </Select>
                                 </TableCell>
 
-                                {/* メモ */}
-                                <TableCell>
+                                {/* メモ いったん不要*/}
+                                {/* <TableCell>
                                     <Input
                                         defaultValue={entry.memo ?? ""}
                                     />
-                                </TableCell>
+                                </TableCell> */}
                                 <TableCell>
-                                    <Button>
+                                    <Button
+                                        onClick={() =>
+                                            handleDeleteEntry(
+                                                ipo.ipo_id,
+                                                index
+                                            )
+                                        }
+                                    >
                                         削除
                                     </Button>
                                 </TableCell>
