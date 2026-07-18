@@ -100,7 +100,6 @@ export default function IpoAccordion({
             ipoId: string,
             rowIndex: number
         ) => {
-            console.log("行削除")
             // 対象行得得
             const currentEntries =
                 entryStateMap[ipoId] ?? [];
