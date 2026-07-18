@@ -50,19 +50,17 @@ export default function IpoAccordion({
     useState(() => {
         const obj: Record<string, any[]> =
         {};
-
         /**
          * Map → Object変換
          * React Stateとして扱いやすい形へ変換
          */
         entryMap.forEach(
-        (value, key) => {
-            obj[key] = value;
-        }
+            (value, key) => {
+                obj[key] = value;
+            }
         );
-
         return obj;
-  });
+    });
     return (
     <Accordion>
     {ipoList?.map((ipo) => {
@@ -83,10 +81,10 @@ export default function IpoAccordion({
                 ipo_entry_id: crypto.randomUUID(),
                 security_company_name: "",
                 applied_shares: 100,
-                entry_status_code: "",
-                entry_status_name: "",
-                lottery_result_code: "",
-                lottery_result_name: "",
+                entry_status_code: 1,
+                entry_status_name: "未申込",
+                lottery_result_code: 1,
+                lottery_result_name: "結果待ち",
                 memo: "",
             };
             setEntryStateMap({
@@ -101,26 +99,18 @@ export default function IpoAccordion({
          * InputやSelect変更時にentryStateMapを更新する
          */
         const handleEntryChange = (
-        ipoId: string,
-        rowIndex: number,
-        field: string,
-        value: any
-        ) => {
-console.log(
-  "field=",
-  field,
-  "value=",
-  value
-);
+            ipoId: string,
+            rowIndex: number,
+            field: string,
+            value: any
+            ) => {
             // 編集対象IPOの行一覧取得
             const currentEntries =
                 entryStateMap[ipoId] ?? [];
-
             // 配列コピー
             const updatedEntries = [
                 ...currentEntries,
             ];
-
             // 対象行更新
             updatedEntries[rowIndex] = {
                 ...updatedEntries[rowIndex],
@@ -274,9 +264,31 @@ console.log(
                                 </TableCell>
                                 {/* 申込状態 */}
                                 <TableCell>
-                                    <Select>
+                                    <Select
+                                        value={entry.entry_status_name ?? ""}
+                                        onValueChange={(value) => {
+                                            const selectedStatus = entryStatusList.find(
+                                                (item) => item.code === value
+                                            );
+                                            const currentEntries =
+                                                entryStateMap[ipo.ipo_id] ?? [];
+                                            const updatedEntries = [...currentEntries];
+
+                                            updatedEntries[index] = {
+                                                ...updatedEntries[index],
+                                                entry_status_code: value,
+                                                entry_status_name:
+                                                    selectedStatus?.code_name ?? "",
+                                            };
+
+                                            setEntryStateMap({
+                                                ...entryStateMap,
+                                                [ipo.ipo_id]: updatedEntries,
+                                            });
+                                        }}
+                                    >
                                         <SelectTrigger>
-                                            <SelectValue />
+                                            <SelectValue placeholder="申込状態" />
                                         </SelectTrigger>
                                         <SelectContent>
                                             {entryStatusList?.map((item) => (
@@ -293,9 +305,31 @@ console.log(
 
                                 {/* 抽選結果 */}
                                 <TableCell>
-                                    <Select>
+                                    <Select
+                                        value={entry.lottery_result_name ?? ""}
+                                        onValueChange={(value) => {
+                                            const selectedResult = lotteryResultList.find(
+                                                (item) => item.code === value
+                                            );
+                                            const currentEntries =
+                                                entryStateMap[ipo.ipo_id] ?? [];
+                                            const updatedEntries = [...currentEntries];
+
+                                            updatedEntries[index] = {
+                                                ...updatedEntries[index],
+                                                lottery_result_code: value,
+                                                lottery_result_name:
+                                                    selectedResult?.code_name ?? "",
+                                            };
+
+                                            setEntryStateMap({
+                                                ...entryStateMap,
+                                                [ipo.ipo_id]: updatedEntries,
+                                            });
+                                        }}
+                                    >
                                         <SelectTrigger>
-                                        <SelectValue />
+                                        <SelectValue placeholder="抽選結果" />
                                         </SelectTrigger>
                                         <SelectContent>
                                         {lotteryResultList?.map((item) => (

@@ -8,7 +8,9 @@ VALUES
     -- IPO状態
     ('ipo_status', 1, 'BB前', 1),
     ('ipo_status', 2, 'BB期間中', 2),
-    ('ipo_status', 3, '上場済', 3),
+    ('ipo_status', 3, '上場待', 3),
+    ('ipo_status', 4, '上場済', 4),
+
 
     -- 申込状態
     ('entry_status', 1, '未申込', 1),
@@ -16,10 +18,12 @@ VALUES
     ('entry_status', 3, '見送り', 3),
 
     -- 抽選結果
-    ('lottery_result', 1, '結果待ち', 1),
+    ('lottery_result', 1, '結果待', 1),
     ('lottery_result', 2, '当選', 2),
     ('lottery_result', 3, '落選', 3),
     ('lottery_result', 4, '補欠', 4),
+    ('lottery_result', 5, '見送り', 5),
+    
 
     -- 通知種別
     ('notification_type', 1, 'BB開始', 1),
