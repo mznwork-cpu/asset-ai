@@ -33,22 +33,22 @@ export default function SideMenu() {
       <SheetContent side="left">
         <div className="mt-6 flex flex-col gap-3">
           <Link href="/ipo" onClick={()=>setOpen(false)}>
-            IPO一覧
+            　　IPO一覧
           </Link>
 
           <Link href="/csv-import" onClick={()=>setOpen(false)}>
-            CSV取込
+            　　CSV取込
           </Link>
 
           <button
-            type="button"
-            className="
-              rounded
-              px-3
-              py-2
-              text-left
-              hover:bg-gray-100
-            "
+            // type="button"
+            // className="
+            //   rounded
+            //   px-3
+            //   py-2
+            //   text-left
+            //   hover:bg-gray-100
+            // "
           >
             ログアウト
           </button>

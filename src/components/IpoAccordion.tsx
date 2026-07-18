@@ -186,15 +186,14 @@ export default function IpoAccordion({
                     <hr />
                     <Table>
                         {/* テーブルタイトル */}
-                        {/* <TableHeader>
+                        <TableHeader>
                             <TableRow>
                             <TableHead>証券会社</TableHead>
                             <TableHead>申込株数</TableHead>
                             <TableHead>申込状態</TableHead>
                             <TableHead>抽選結果</TableHead>
-                            <TableHead>メモ</TableHead>
                             </TableRow>
-                        </TableHeader> */}
+                        </TableHeader>
                         {/* テーブル行 */}
                         <TableBody>
                             {entries.map(
