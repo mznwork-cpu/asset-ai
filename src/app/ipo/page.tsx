@@ -5,8 +5,9 @@ import { getIpoEntries } from "@/services/ipo-entry.service";
 import { getCodeList } from "@/services/code.service";
 import { getUserSecuritiesCompanies } from "@/services/securities-company.service"
 // import Commponents
-import IpoAccordion from "@/components/IpoAccordion";
 import { Button } from "@/components/ui/button";
+import IpoAccordion from "@/components/IpoAccordion";
+import IpoSearch from "@/components/IpoSearch";
 
 export default async function IpoPage() {
   // USER_ID取得してIPOEntryリストの取得
@@ -14,15 +15,23 @@ export default async function IpoPage() {
     user 
   } = await getCurrentUser();
   // codeマスタからリスト取得
+  // 申込状態
   const {
     data: entryStatusList,
   } = await getCodeList(
     "entry_status"
   );
+  // 抽選結果
   const {
     data: lotteryResultList,
   } = await getCodeList(
     "lottery_result"
+  );
+  // IPO状態
+  const {
+   data: ipoStatusList,
+  } = await getCodeList(
+    "ipo_status"
   );
   // ユーザ証券会社一覧取得
   const {
@@ -71,17 +80,11 @@ export default async function IpoPage() {
       </h1>
 
       {/* 検索エリア */}
-      <div className="border rounded p-4 space-y-4">
-        <div>
-          <label> 企業名 </label>
-        </div>
-        <div>
-          <label> IPO状態 </label>
-        </div>
-        <Button>
-          検索
-        </Button>
-      </div>
+        <IpoSearch
+          ipoStatusList={
+              ipoStatusList ??[]
+          }
+        />
       {/* 一覧表示 */}
         <IpoAccordion
           userId={user.id}
