@@ -84,6 +84,7 @@ export default async function IpoPage() {
       </div>
       {/* 一覧表示 */}
         <IpoAccordion
+          userId={user.id}
           ipoList={ipoList}
           entryMap={entryMap}
           securitiesCompanies={securitiesCompanies ??[]}

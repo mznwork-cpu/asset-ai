@@ -24,9 +24,12 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+// DB更新servise
+import { replaceIpoEntries } from "@/services/ipo-entry.service";
 
 // 受取パラメータ
 type Props = {
+  userId: string;
   ipoList: any[];
   entryMap: Map<any, any>;
   securitiesCompanies: any[];
@@ -35,6 +38,7 @@ type Props = {
 };
 
 export default function IpoAccordion({
+  userId,
   ipoList,
   entryMap,
   securitiesCompanies,
@@ -70,7 +74,7 @@ export default function IpoAccordion({
          */
         const entries =
             entryStateMap[ipo.ipo_id] ?? [];
-        // 証券会社追加ボタン
+
         //画面行追加
         const handleAddEntry = (
             ipoId: string
@@ -95,6 +99,7 @@ export default function IpoAccordion({
             ],
             });
         };
+
         // 画面行削除
         const handleDeleteEntry = (
             ipoId: string,
@@ -116,6 +121,7 @@ export default function IpoAccordion({
                 [ipoId]:updatedEntries,
             });
         };
+
         // 画面行編集
         const handleEntryChange = (
             ipoId: string,
@@ -143,6 +149,30 @@ export default function IpoAccordion({
                 [ipoId]:updatedEntries,
             });
         };
+
+        // DBへ編集保存
+        // DELETE → INSERTで再作成
+        const handleSaveEntries = async (
+            ipoId: string
+        ) => {
+        // 編集中データの取得
+            const entries =
+                entryStateMap[ipoId] ?? [];
+
+            try {
+                // DB反映
+                await replaceIpoEntries(
+                    userId,
+                    ipoId,
+                    entries
+                );
+                alert("保存しました");
+            } catch (error) {
+                console.error(error);
+                alert("保存失敗");
+            }
+        };
+
         // Accodion表示
         return (
             <AccordionItem
@@ -179,7 +209,9 @@ export default function IpoAccordion({
                             }>
                                 証券会社追加
                             </Button>
-                            <Button>
+                            <Button onClick={() =>
+                                handleSaveEntries(ipo.ipo_id)
+                            }>
                                 編集保存
                             </Button>
                         </div>

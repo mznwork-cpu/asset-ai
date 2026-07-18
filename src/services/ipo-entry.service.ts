@@ -1,8 +1,6 @@
 import { supabase } from "@/lib/supabase";
 
-/**
- * IPO申込情報取得
- */
+// IPO申込情報取得
 export async function getIpoEntries(
   userId: string
 ) {
@@ -40,3 +38,53 @@ export async function getIpoEntries(
 //     LEFT JOIN code_master cm_lr
 //         ON ie.lottery_result_code = cm_lr.code
 //        AND cm_lr.code_category = 'lottery_result';
+
+// IPO申込情報置換
+// DELETE → INSERTで再作成
+export async function replaceIpoEntries(
+  userId: string,
+  ipoId: string,
+  entries: any[]
+) {
+  // 既存削除
+  const { error: deleteError } =
+    await supabase
+      .from("ipo_entries")
+      .delete()
+      .eq("user_id", userId)
+      .eq("ipo_id", ipoId);
+
+  if (deleteError) {
+    throw deleteError;
+  }
+
+  // INSERTデータ作成
+  const insertRows = entries.map(
+    (entry) => ({
+      user_id: userId,
+      ipo_id: ipoId,
+      security_company_id:
+        entry.security_company_id,
+      entry_status_code:
+        entry.entry_status_code,
+      lottery_result_code:
+        entry.lottery_result_code,
+      applied_shares:
+        Number(
+          entry.applied_shares ?? 0
+        ),
+      memo:
+        entry.memo ?? null,
+    })
+  );
+
+  // 新規登録
+  const { error: insertError } =
+    await supabase
+      .from("ipo_entries")
+      .insert(insertRows);
+
+  if (insertError) {
+    throw insertError;
+  }
+}
