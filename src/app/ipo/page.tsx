@@ -23,6 +23,8 @@ export default async function IpoPage({
 }) {
   // URL検索条件取得
   const params = await searchParams;
+  // IPO状態初期値 未指定時はBB期間中
+  const ipoStatusCode =params.ipoStatusCode ?? "2";
   // USER_ID取得してIPOEntryリストの取得
   const { 
     user 
@@ -60,7 +62,8 @@ export default async function IpoPage({
     companyName:
       params.companyName,
     ipoStatusCode:
-      params.ipoStatusCode,
+      // params.ipoStatusCode,
+      ipoStatusCode,
     bbDate:
       params.bbDate,
     listingDate:
@@ -111,7 +114,7 @@ export default async function IpoPage({
           params.companyName ?? ""
         }
         initialIpoStatusCode={
-          params.ipoStatusCode ?? ""
+          ipoStatusCode
         }
         initialBbDate={
           params.bbDate ?? ""
