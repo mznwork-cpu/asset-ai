@@ -180,7 +180,7 @@ export default function IpoAccordion({
                 value={ipo.ipo_id}
             >
                 {/* Accodion外側 */}
-                <AccordionTrigger  className="bg-slate-200">
+                <AccordionTrigger  className="bg-slate-100">
                     <div className="text-left">
                         <div className="font-semibold">
                             {ipo.company_name} 

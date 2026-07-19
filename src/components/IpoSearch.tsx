@@ -158,6 +158,22 @@ return (
       >
         検索
       </Button>
+      {/* クリアボタン */}
+      <Button
+        variant="outline"
+        onClick={() => {
+          // 入力項目クリア
+          setCompanyName("");
+          setIpoStatusCode("2");
+          setIpoStatusName("BB期間中");
+          setBbDate("");
+          setListingDate("");
+          // 一覧再取得
+          router.push("/ipo");
+        }}
+      >
+        クリア
+      </Button>
     </div>
   );
 }
