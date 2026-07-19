@@ -53,15 +53,15 @@ export default function IpoSearch({
 
       {/* BB期間 */}
       <div className="flex items-center gap-2">
-        <label className="w-36">BB期</label>
+        <label className="w-36">BB期間</label>
         <Input
           type="date"
         />
-      {/* </div> */}
+      </div>
 
       {/* 上場日 */}
-      {/* <div className="flex items-center gap-2"> */}
-        <label className="w-36">上場～</label>
+      <div className="flex items-center gap-2">
+        <label className="w-36">上場日以降</label>
         <Input
           type="date"
         />
