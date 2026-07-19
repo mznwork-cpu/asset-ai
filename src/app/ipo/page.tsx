@@ -76,7 +76,7 @@ export default async function IpoPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">
-        IPO一覧
+        IPO一覧〇
       </h1>
 
       {/* 検索エリア */}
