@@ -11,7 +11,18 @@ import { Button } from "@/components/ui/button";
 import IpoAccordion from "@/components/IpoAccordion";
 import IpoSearch from "@/components/IpoSearch";
 
-export default async function IpoPage() {
+export default async function IpoPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    companyName?: string;
+    ipoStatusCode?: string;
+    bbDate?: string;
+    listingDate?: string;
+  }>;
+}) {
+  // URL検索条件取得
+  const params = await searchParams;
   // USER_ID取得してIPOEntryリストの取得
   const { 
     user 
@@ -40,11 +51,21 @@ export default async function IpoPage() {
     data: securitiesCompanies,
   } = await getUserSecuritiesCompanies(
     user.id
-  );  // IPOリストの取得
-  const { 
-    data:ipoList,
-    error:ipoError,
-  } = await getIpoList();
+  );
+  // IPOリストの取得
+  const {
+    data: ipoList,
+    error: ipoError,
+  } = await getIpoList({
+    companyName:
+      params.companyName,
+    ipoStatusCode:
+      params.ipoStatusCode,
+    bbDate:
+      params.bbDate,
+    listingDate:
+      params.listingDate,
+  });
   if (ipoError) {
     return (
       <div>
@@ -68,9 +89,9 @@ export default async function IpoPage() {
   ipoEntries?.forEach((entry) => {
     const entries =
       entryMap.get(entry.ipo_id) ?? [];
-    entries.push(entry);
-    entryMap.set(
-      entry.ipo_id,
+      entries.push(entry);
+      entryMap.set(
+        entry.ipo_id,
       entries
     );
   });
@@ -82,11 +103,23 @@ export default async function IpoPage() {
       </h1>
 
       {/* 検索エリア */}
-        <IpoSearch
-          ipoStatusList={
-              ipoStatusList ??[]
-          }
-        />
+      <IpoSearch
+        ipoStatusList={
+          ipoStatusList ?? []
+        }
+        initialCompanyName={
+          params.companyName ?? ""
+        }
+        initialIpoStatusCode={
+          params.ipoStatusCode ?? ""
+        }
+        initialBbDate={
+          params.bbDate ?? ""
+        }
+        initialListingDate={
+          params.listingDate ?? ""
+        }
+      />
       {/* 一覧表示 */}
         <IpoAccordion
           userId={user.id}

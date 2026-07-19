@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 import {
   Select,
@@ -14,21 +15,36 @@ import {
 } from "@/components/ui/select";
 
 type Props = {
+  // IPO状態一覧
   ipoStatusList: any[];
+
+  // 検索条件初期値
+  initialCompanyName: string;
+  initialIpoStatusCode: string;
+  initialBbDate: string;
+  initialListingDate: string;
 };
 
+// 
 export default function IpoSearch({
   ipoStatusList,
+  initialCompanyName,
+  initialIpoStatusCode,
+  initialBbDate,
+  initialListingDate,
 }: Props) {
-// 検索条件
-  const [companyName, setCompanyName] = useState("");
-  const [ipoStatusCode, setIpoStatusCode] = useState("");
+  // 検索条件
+  const [companyName, setCompanyName] = useState(initialCompanyName);
+  const [ipoStatusCode, setIpoStatusCode] = useState(initialIpoStatusCode);
   const [ipoStatusName, setIpoStatusName] = useState("");
-  const [bbDate, setBbDate] = useState("");
-  const [listingDate, setListingDate] = useState("");
-  return (
+  const [bbDate, setBbDate] = useState(initialBbDate);
+  const [listingDate, setListingDate] = useState(initialListingDate);
+  // URL遷移
+  const router = useRouter();
+
+// 画面
+return (
     <div className="border rounded p-4 space-y-4">
-      <div className="space-y-3">
 
       {/* 企業名 */}
       <div className="flex items-center gap-2">
@@ -107,16 +123,37 @@ export default function IpoSearch({
             }
           />
       </div>
-      </div>
-
+      
+      {/* 検索ボタン */}
       <Button
         onClick={() => {
-          console.log({
-            companyName,
-            ipoStatusCode,
-            bbDate,
-            listingDate,
-          });
+          //  検索条件
+          const params = new URLSearchParams();
+          if (companyName) {
+            params.set(
+              "companyName", companyName
+            );
+          }
+          if (ipoStatusCode) {
+            params.set(
+              "ipoStatusCode", ipoStatusCode
+            );
+          }
+          if (bbDate) {
+            params.set(
+              "bbDate", bbDate
+            );
+          }
+          if (listingDate) {
+            params.set(
+              "listingDate", listingDate
+            );
+          }
+
+          // 検索実行
+          router.push(
+            `/ipo?${params.toString()}`
+          );
         }}
       >
         検索
