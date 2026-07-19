@@ -18,18 +18,19 @@ export default function IpoSearch({
 }: Props) {
   return (
     <div className="border rounded p-4 space-y-4">
+      <div className="space-y-3">
 
       {/* 企業名 */}
-      <div>
-        <label>企業名</label>
+      <div className="flex items-center gap-2">
+        <label className="w-24">企業名</label>
         <Input
           placeholder="企業名"
         />
       </div>
 
       {/* IPO状態 */}
-      <div>
-        <label>IPO状態</label>
+      <div className="flex items-center gap-2">
+        <label className="w-20">IPO状態</label>
         <Select>
           <SelectTrigger>
             <SelectValue placeholder="すべて" />
@@ -51,19 +52,20 @@ export default function IpoSearch({
       </div>
 
       {/* BB期間 */}
-      <div>
-        <label>BB期間</label>
+      <div className="flex items-center gap-2">
+        <label className="w-36">BB期</label>
+        <Input
+          type="date"
+        />
+      {/* </div> */}
+
+      {/* 上場日 */}
+      {/* <div className="flex items-center gap-2"> */}
+        <label className="w-36">上場～</label>
         <Input
           type="date"
         />
       </div>
-
-      {/* 上場日 */}
-      <div>
-        <label>上場日以降</label>
-        <Input
-          type="date"
-        />
       </div>
 
       <Button>
