@@ -1,3 +1,4 @@
+// キャッシュなしで毎回サーバで再生成
 export const dynamic = "force-dynamic";
 // import Servise
 import { getCurrentUser } from "@/services/auth.service";
