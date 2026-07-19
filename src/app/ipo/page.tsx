@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 // import Servise
 import { getCurrentUser } from "@/services/auth.service";
 import { getIpoList } from "@/services/ipo.service";
@@ -76,7 +77,7 @@ export default async function IpoPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">
-        IPO一覧〇
+        IPO一覧
       </h1>
 
       {/* 検索エリア */}
