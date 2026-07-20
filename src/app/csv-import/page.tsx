@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
+import { importIpoCsv } from "@/services/ipo-import.service";
+
 // CSV取込画面
 export default function CsvImportPage() {
 
@@ -68,8 +70,11 @@ export default function CsvImportPage() {
 
     // jsonでconsole表示
     console.log(rows);
+    
+    // CSVと取込み
+    await importIpoCsv(rows);
 
-    alert("CSV読込成功");
+    alert("取込完了");
   };
   return (
     <div className="space-y-4">

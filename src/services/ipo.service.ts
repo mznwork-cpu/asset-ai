@@ -37,7 +37,10 @@ export async function getIpoList(
 
   // BB期間
   // 入力日が bb_start ～ bb_end の範囲内
-  if (condition?.bbDate) {
+  if (
+    condition?.bbDate &&
+    condition?.bbDate != ""
+  ) {
     query = query
       .lte("bb_start", condition.bbDate)
       .gte("bb_end", condition.bbDate);
