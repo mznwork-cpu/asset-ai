@@ -2,7 +2,15 @@
 CREATE OR REPLACE VIEW v_ipo_master AS
 SELECT
     t.*
-   ,cm.code_name AS ipo_status_name
+    ,cm.code_name AS ipo_status_name
+    ,exists(
+        SELECT
+            1
+        FROM
+            ipo_entries ie
+        WHERE
+            ie.ipo_id = t.ipo_id
+   ) as cheked
 FROM (
     SELECT
         im.ipo_id
@@ -33,7 +41,7 @@ FROM (
 LEFT JOIN code_master cm
     ON t.ipo_status_code = cm.code
    AND cm.code_category = 'ipo_status';
-   
+
 -- ■IPOエントリー一覧
 CREATE OR REPLACE VIEW v_ipo_entry AS
 SELECT
