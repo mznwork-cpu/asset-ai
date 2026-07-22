@@ -183,9 +183,10 @@ export default function IpoAccordion({
                 <AccordionTrigger  className="bg-slate-100">
                     <div className="text-left">
                         <div className="font-semibold">
-                            {ipo.company_name} 
+                            {ipo.security_code}.{ipo.company_name} 
                             {"  /評価:"} {ipo.ipo_rating}
-                            {"  /状態:"} {ipo.ipo_status_name}
+                            {"  /状態:"} {ipo.ipo_status_name} 
+                            {"  /"} {ipo.checked}
 
                         </div>
                         <div>
